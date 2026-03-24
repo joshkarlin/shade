@@ -28,8 +28,7 @@ echo "==> Installing..."
 adb wait-for-device
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 
-echo "==> Granting WRITE_SECURE_SETTINGS..."
-adb shell pm grant pro.shade android.permission.WRITE_SECURE_SETTINGS
+bash grant.sh
 
 echo ""
 echo "Done. Enable Shade in Settings → Accessibility on the device."
