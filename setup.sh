@@ -22,11 +22,11 @@ if [ ! -f "gradle/wrapper/gradle-wrapper.jar" ]; then
 fi
 
 echo "==> Building..."
-./gradlew assembleDebug
+./gradlew assembleRelease
 
 echo "==> Installing..."
 adb wait-for-device
-adb install -r app/build/outputs/apk/debug/app-debug.apk
+adb install -r app/build/outputs/apk/release/app-release.apk
 
 bash grant.sh
 

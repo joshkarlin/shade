@@ -19,11 +19,7 @@ else
     NEW="${CURRENT}:${COMPONENT}"
 fi
 
-echo "  Writing: '$NEW'"
 adb shell settings put secure enabled_accessibility_services "$NEW"
 adb shell settings put secure accessibility_enabled 1
 
-echo "==> Verifying..."
-adb shell settings get secure enabled_accessibility_services | tr -d '\r\n'
-echo ""
 echo "Done."
