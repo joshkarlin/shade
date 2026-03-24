@@ -1,0 +1,1 @@
+-keep class pro.shade.AppWatcherService { *; }

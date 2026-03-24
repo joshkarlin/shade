@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shade</string>
+    <string name="accessibility_description">Shade watches for app switches and applies your configured grayscale setting.</string>
+</resources>
