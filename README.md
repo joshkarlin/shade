@@ -33,7 +33,17 @@ This does three things:
 
 ### 3. Done
 
-Open Shade and configure per-app grayscale. Use **SHADE ALL** or **UNSHADE ALL** to bulk-configure, then fine-tune individual apps.
+Open Shade and configure per-app grayscale.
+
+## Using Shade
+
+The app list is split into two tabs — **MY APPS** (apps you installed) and **BUILT-IN** (pre-installed and system apps). Tap any row to toggle grayscale for that app.
+
+App names appear in soft rainbow when in colour mode, white when shaded. Tap the **SHADE** title to toggle grayscale for Shade itself — the whole UI switches mode instantly.
+
+**FULL SHADE** / **NO SHADE** applies to all apps in the current tab at once.
+
+Shade itself is excluded from the grayscale filter when you're using it, so the UI always remains readable.
 
 ## Building from source
 
