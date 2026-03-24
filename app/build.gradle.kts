@@ -1,6 +1,13 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+}
+
+val keystoreProps = Properties().also { props ->
+    val propsFile = rootProject.file("keystore.properties")
+    if (propsFile.exists()) props.load(propsFile.inputStream())
 }
 
 android {
@@ -15,8 +22,19 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        create("release") {
+            keyAlias     = keystoreProps.getProperty("keyAlias")     ?: System.getenv("KEY_ALIAS")
+            keyPassword  = keystoreProps.getProperty("keyPassword")  ?: System.getenv("KEY_PASSWORD")
+            storePassword= keystoreProps.getProperty("storePassword")?: System.getenv("KEYSTORE_PASSWORD")
+            storeFile    = (keystoreProps.getProperty("storeFile")   ?: System.getenv("KEYSTORE_PATH"))
+                               ?.let { rootProject.file(it) }
+        }
+    }
+
     buildTypes {
         release {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
