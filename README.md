@@ -4,6 +4,8 @@ Per-app grayscale for Android. Toggle colour correction on or off for each app â
 
 Built for the Light Phone 3, but works on any Android 10+ device.
 
+[![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=fff)](#)
+
 ## How it works
 
 Shade runs as an [Accessibility Service](https://developer.android.com/guide/topics/ui/accessibility/service), watching for app switches. When you open an app, Shade looks up your saved preference and applies (or removes) Android's system grayscale via `Settings.Secure`.
