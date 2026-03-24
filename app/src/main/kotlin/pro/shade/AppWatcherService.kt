@@ -6,29 +6,29 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class AppWatcherService : AccessibilityService() {
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private lateinit var prefs: AppPreferences
+    private var cache: Map<String, Boolean> = emptyMap()
     private var lastPackage: String? = null
 
     override fun onServiceConnected() {
-        prefs = AppPreferences(this)
+        scope.launch {
+            AppPreferences(this@AppWatcherService).all().collect { cache = it }
+        }
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
-        if (event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         val pkg = event.packageName?.toString() ?: return
+
+        // Ignore system UI — it's not a real app switch
+        if (pkg == "com.android.systemui") return
         if (pkg == lastPackage) return
         lastPackage = pkg
 
-        scope.launch {
-            val grayscale = prefs.isGrayscale(pkg).first()
-            ColorCorrection.setGrayscale(this@AppWatcherService, grayscale)
-        }
+        ColorCorrection.setGrayscale(this, cache[pkg] ?: false)
     }
 
     override fun onInterrupt() {}

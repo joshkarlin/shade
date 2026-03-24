@@ -26,4 +26,10 @@ class AppPreferences(private val context: Context) {
     suspend fun set(packageName: String, grayscale: Boolean) {
         context.dataStore.edit { it[booleanPreferencesKey(packageName)] = grayscale }
     }
+
+    suspend fun setAll(packageNames: List<String>, grayscale: Boolean) {
+        context.dataStore.edit { prefs ->
+            packageNames.forEach { pkg -> prefs[booleanPreferencesKey(pkg)] = grayscale }
+        }
+    }
 }

@@ -94,6 +94,37 @@ fun AppListScreen(prefs: AppPreferences, modifier: Modifier = Modifier) {
                 letterSpacing = 5.sp,
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 28.dp),
             )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 24.dp),
+            ) {
+                Text(
+                    text = "SHADE ALL",
+                    color = Color(0xFF888888),
+                    fontSize = 11.sp,
+                    letterSpacing = 2.sp,
+                    modifier = Modifier
+                        .clickable {
+                            scope.launch { prefs.setAll(apps.map { it.packageName }, true) }
+                        }
+                        .padding(vertical = 4.dp),
+                )
+                Spacer(Modifier.width(28.dp))
+                Text(
+                    text = "UNSHADE ALL",
+                    color = Color(0xFF888888),
+                    fontSize = 11.sp,
+                    letterSpacing = 2.sp,
+                    modifier = Modifier
+                        .clickable {
+                            scope.launch { prefs.setAll(apps.map { it.packageName }, false) }
+                        }
+                        .padding(vertical = 4.dp),
+                )
+            }
+            HorizontalDivider(color = Color(0xFF1A1A1A), thickness = 1.dp)
         }
 
         // Permission banners
