@@ -14,32 +14,42 @@ Writing to `Settings.Secure` requires `WRITE_SECURE_SETTINGS`, a permission not 
 
 ## Setup
 
-### 1. Build and install
+### 1. Install the APK
+
+Download `app-release.apk` from the [latest release](https://github.com/joshkarlin/shade/releases/latest) and install it on your device.
+
+### 2. Run the grant script
+
+With the device connected via USB and USB debugging enabled:
+
+```bash
+./grant.sh
+```
+
+This does three things:
+- Lifts Android 13+'s sideload restriction so the accessibility service can be enabled
+- Grants `WRITE_SECURE_SETTINGS` via ADB
+- Enables the Shade accessibility service
+
+### 3. Done
+
+Open Shade and configure per-app grayscale. Use **SHADE ALL** or **UNSHADE ALL** to bulk-configure, then fine-tune individual apps.
+
+## Building from source
 
 ```bash
 ./setup.sh
 ```
 
-Requires:
-- JDK at `/Applications/Android Studio.app/Contents/jbr/Contents/Home` (adjust `JAVA_HOME` in `setup.sh` if yours differs)
-- Android SDK platform-tools at `~/Library/Android/sdk/platform-tools`
-- Device connected with USB debugging enabled
-
-The script downloads the Gradle wrapper on first run, builds the APK, installs it, and grants the permission.
-
-### 2. Enable the Accessibility Service
-
-On the device: **Settings → Accessibility → Shade → enable**
-
-That's it. Open Shade, toggle the apps you want in grayscale.
+Requires the Android SDK at `~/Library/Android/sdk` and the JDK at `/Applications/Android Studio.app/Contents/jbr/Contents/Home`. Adjust `JAVA_HOME` and `ANDROID_HOME` in `setup.sh` if yours differ.
 
 ## Permissions
 
 | Permission | Why | How granted |
 |---|---|---|
-| `WRITE_SECURE_SETTINGS` | Write grayscale settings | ADB (done by `setup.sh`) |
+| `WRITE_SECURE_SETTINGS` | Write grayscale settings | ADB via `grant.sh` |
 | `QUERY_ALL_PACKAGES` | List installed apps | Normal install |
-| Accessibility Service | Detect app switches | User enables in Settings |
+| Accessibility Service | Detect app switches | ADB via `grant.sh` |
 
 ## Tech
 
